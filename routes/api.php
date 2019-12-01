@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('festivals', 'FestivalController@index');
+Route::get('festival/{id}', 'FestivalController@show');
+Route::post('festival', 'FestivalController@store');
+Route::put('festival', 'FestivalController@store');
+Route::delete('festival/{id}', 'FestivalController@destroy');
