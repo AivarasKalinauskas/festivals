@@ -29,7 +29,8 @@ class Festival extends JsonResource
             'cover' => $this->cover,
             'video' => $this->video,
             'link' => $this->link,
-            'facebook' => $this->facebook
+            'facebook' => $this->facebook,
+            'slug' => $this->slug,
         ];
     }
 }

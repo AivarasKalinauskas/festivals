@@ -1844,8 +1844,239 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Festivals"
+  name: "Festivals",
+  data: function data() {
+    return {
+      festivals: [],
+      festival: {
+        id: '',
+        title: '',
+        address: '',
+        place_name: '',
+        date_from: '',
+        date_to: '',
+        description: '',
+        country_id: '',
+        city_id: '',
+        cover: '',
+        video: '',
+        link: '',
+        facebook: '',
+        slug: ''
+      },
+      festival_id: '',
+      pagination: {
+        current: 1,
+        total: 0
+      },
+      edit: false
+    };
+  },
+  created: function created() {
+    this.fetchFestivals();
+  },
+  methods: {
+    fetchFestivals: function fetchFestivals() {
+      var _this = this;
+
+      fetch('/api/festivals?page=' + this.pagination.current).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.festivals = res.data;
+        _this.pagination.current = res.meta.current_page;
+        _this.pagination.total = res.meta.last_page;
+      });
+    },
+    onPageChange: function onPageChange() {
+      this.fetchFestivals();
+    },
+    deleteFestival: function deleteFestival(id) {
+      var _this2 = this;
+
+      if (confirm('Ar tikrai norite ištrinti')) {
+        fetch("api/festival/".concat(id), {
+          method: 'delete'
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          alert('Festivalis ištrintas');
+
+          _this2.fetchFestivals();
+        });
+      }
+    },
+    addArticle: function addArticle() {
+      var _this3 = this;
+
+      if (this.edit === false) {
+        fetch('api/festival', {
+          method: 'post',
+          body: JSON.stringify(this.festival),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.festival.title = '';
+          _this3.festival.description = '';
+          _this3.festival.address = '';
+          _this3.festival.date_from = '';
+          _this3.festival.date_to = '';
+          _this3.festival.country_id = '';
+          _this3.festival.city_id = '';
+          _this3.festival.slug = '';
+          alert('Festivalis įdėtas');
+
+          _this3.fetchFestivals();
+        });
+      } else {
+        fetch('api/festival', {
+          method: 'put',
+          body: JSON.stringify(this.festival),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.festival.title = '';
+          _this3.festival.description = '';
+          _this3.festival.address = '';
+          _this3.festival.date_from = '';
+          _this3.festival.date_to = '';
+          _this3.festival.country_id = '';
+          _this3.festival.city_id = '';
+          _this3.festival.slug = '';
+          alert('Festivalis atnaujinatas');
+
+          _this3.fetchFestivals();
+        });
+      }
+    },
+    editFestival: function editFestival(festival) {
+      this.edit = true;
+      this.festival.id = festival.id;
+      this.festival.festival_id = festival.id;
+      this.festival.title = festival.title;
+      this.festival.description = festival.description;
+      this.festival.address = festival.address;
+      this.festival.date_from = festival.date_from;
+      this.festival.date_to = festival.date_to;
+      this.festival.country_id = festival.country_id;
+      this.festival.city_id = festival.city_id;
+      this.festival.slug = festival.slug;
+    }
+  }
 });
 
 /***/ }),
@@ -37242,7 +37473,215 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h2", [_vm._v("\n    Festivals\n")])
+  return _c(
+    "div",
+    [
+      _c(
+        "v-form",
+        {
+          ref: "form",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addArticle($event)
+            }
+          }
+        },
+        [
+          _c("v-text-field", {
+            attrs: { label: "Pavadinimas", required: "" },
+            model: {
+              value: _vm.festival.title,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "title", $$v)
+              },
+              expression: "festival.title"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "Adresas", required: "" },
+            model: {
+              value: _vm.festival.address,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "address", $$v)
+              },
+              expression: "festival.address"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "Nuo", required: "" },
+            model: {
+              value: _vm.festival.date_from,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "date_from", $$v)
+              },
+              expression: "festival.date_from"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "Iki", required: "" },
+            model: {
+              value: _vm.festival.date_to,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "date_to", $$v)
+              },
+              expression: "festival.date_to"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "Šalis", required: "" },
+            model: {
+              value: _vm.festival.country_id,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "country_id", $$v)
+              },
+              expression: "festival.country_id"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "Miestas", required: "" },
+            model: {
+              value: _vm.festival.city_id,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "city_id", $$v)
+              },
+              expression: "festival.city_id"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: { label: "Slug", required: "" },
+            model: {
+              value: _vm.festival.slug,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "slug", $$v)
+              },
+              expression: "festival.slug"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-textarea", {
+            attrs: { label: "Aprašymas" },
+            model: {
+              value: _vm.festival.description,
+              callback: function($$v) {
+                _vm.$set(_vm.festival, "description", $$v)
+              },
+              expression: "festival.description"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              staticClass: "mr-4",
+              attrs: { type: "submit", color: "success" }
+            },
+            [_vm._v("\n            Įdėti\n        ")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("h2", [_vm._v("\n        Festivals\n    ")]),
+      _vm._v(" "),
+      _vm._l(_vm.festivals, function(festival) {
+        return _c(
+          "div",
+          { key: festival.id },
+          [
+            _c(
+              "v-card",
+              { staticClass: "mx-auto" },
+              [
+                _c(
+                  "v-img",
+                  {
+                    staticClass: "white--text align-end",
+                    attrs: {
+                      height: "200px",
+                      src: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                    }
+                  },
+                  [_c("v-card-title", [_vm._v(_vm._s(festival.title))])],
+                  1
+                ),
+                _vm._v(" "),
+                _c("v-card-subtitle", { staticClass: "pb-0" }, [
+                  _vm._v("Number 10")
+                ]),
+                _vm._v(" "),
+                _c("v-card-text", { staticClass: "text--primary" }, [
+                  _c("div", [_vm._v(_vm._s(festival.description))]),
+                  _vm._v(" "),
+                  _c("div", [_vm._v("Whitsunday Island, Whitsunday Islands")])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "v-card-actions",
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { color: "green", text: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.editFestival(festival)
+                          }
+                        }
+                      },
+                      [_vm._v("\n                    Edit\n                ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: { color: "red", text: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteFestival(festival.id)
+                          }
+                        }
+                      },
+                      [_vm._v("\n                    Delete\n                ")]
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "text-center" },
+        [
+          _c("v-pagination", {
+            attrs: { length: _vm.pagination.total, circle: "" },
+            on: { input: _vm.onPageChange },
+            model: {
+              value: _vm.pagination.current,
+              callback: function($$v) {
+                _vm.$set(_vm.pagination, "current", $$v)
+              },
+              expression: "pagination.current"
+            }
+          })
+        ],
+        1
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

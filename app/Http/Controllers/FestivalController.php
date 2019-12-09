@@ -16,7 +16,7 @@ class FestivalController extends Controller
      */
     public function index()
     {
-        $festivals = Festival::paginate(15);
+        $festivals = Festival::paginate(2);
 
         return FestivalResource::collection($festivals);
     }

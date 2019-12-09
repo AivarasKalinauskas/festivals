@@ -3,7 +3,9 @@
 @section('content')
     <div class="container">
         <div id="app">
-            <festivals></festivals>
+            <v-app>
+              <festivals></festivals>
+            </v-app>
         </div>
     </div>
 @endsection
